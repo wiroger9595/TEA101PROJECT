@@ -114,25 +114,25 @@ public class OrderMasterDAO implements OrderMasterDAOInterface{
 			//System.out.println(rs);
 			if(rs.next()) {
 				nowOMId = rs.getString(1);
-				System.out.println("OrderMaster自增主鍵值="+ nowOMId + "剛新增成功的訂單編號");
+				System.out.println("OrderMaster auto generate key ="+ nowOMId + " insert success OrderMaster ");
 			}else {
-				System.out.println("未取得OrderMaster自增主鍵值");
+				System.out.println("did get OrderMaster auto generate key");
 			}
 			rs.close();
 			
 			/**************************新增訂單明細******************************/
 			OrderDetailDAO oddao = new OrderDetailDAO();
-			System.out.println("共有"+ odlist.size() + "筆訂單明細準備被新增");
+			System.out.println(" total get"+ odlist.size() + " orderDetail inserted ");
 			for(OrderDetailVO orderDetailVO : odlist) {
 				orderDetailVO.setOrderMasterId(nowOMId);
 				oddao.insertwithOrderMaster(orderDetailVO, con);
-				System.out.println("訂單明細新增成功");
+				System.out.println(" orderDetail insert success ");
 			}
 			
 			con.commit();
 			orderMasterId = nowOMId;
 			System.out.println(orderMasterId);
-			System.out.println("新增訂單編號" + nowOMId + "時，共有明細" + odlist.size() + "筆同時被新增");
+			System.out.println(" new orderMasterId number" + nowOMId + " there is total have " + odlist.size() + " row inserted");
 			
 		} catch (Exception e) {
 			if (con != null) {
